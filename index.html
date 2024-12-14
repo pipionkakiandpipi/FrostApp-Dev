@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrostApp - Accueil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/FrostHub.png" type="image/png">
+</head>
+<body>
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+    <!-- Barre de navigation avec le logo, les liens de navigation et la barre de recherche -->
+    <header>
+        <div class="navbar">
+            <h1>FrostApp</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html" id="home-button">Accueil</a></li>
+                    <li><a href="all-games.html" id="all-games-button">Tous les jeux</a></li> <!-- Lien modifié -->
+                    <li><a href="#">Téléchargements</a></li>
+                </ul>
+            </nav>
+            <!-- Champ de recherche pour rechercher des jeux -->
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Rechercher un jeu...">
+                <button id="search-button">🔍</button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Contenu principal de la page -->
+    <main id="main-content">
+
+        <!-- Loader visible pendant le chargement des jeux -->
+        <div id="loader" class="loader" style="display: none;">
+            <div class="spinner"></div>
+            
+        </div>
+        
+        <!-- Sections pour les jeux -->
+        <section class="recent-games" id="recent-games-section">
+            <h2>Jeux Récents</h2>
+            <div id="recent-games" class="game-grid"></div>
+        </section>
+        <section class="popular-games" id="popular-games-section">
+            <h2>Jeux Populaires</h2>
+            <div id="popular-games" class="game-grid"></div>
+        </section>
+        <section id="search-results" class="hidden">
+            <h2>Résultats de la recherche</h2>
+            <div id="results-container" class="game-grid"></div>
+            <p id="no-results" class="hidden">Aucun jeu trouvé pour votre recherche.</p>
+        </section>
+        <section id="all-games-section" class="hidden">
+            <h2>Tous les jeux</h2>
+            <div id="all-games" class="game-grid"></div>
+        </section>
+    </main>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

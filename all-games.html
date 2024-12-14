@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tous les jeux - FrostApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/FrostHub.png" type="image/png">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>FrostApp</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html" id="home-button">Accueil</a></li>
+                    <li><a href="all-games.html" id="all-games-button">Tous les jeux</a></li> <!-- Lien vers tous les jeux -->
+                    <li><a href="#">Téléchargements</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Rechercher un jeu...">
+                <button id="search-button">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Loader visible pendant le chargement des jeux -->
+        <div id="loader" class="loader" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Section Tous les jeux -->
+        <section id="all-games-section">
+            <h2>Tous les jeux</h2>
+            <div id="all-games" class="game-grid"></div>
+        </section>
+
+        <!-- Section des résultats de recherche -->
+        <section id="search-results" class="hidden">
+            <h2>Résultats de la recherche</h2>
+            <div id="results-container" class="game-grid"></div>
+            <p id="no-results" class="hidden">Aucun jeu trouvé.</p>
+        </section>
+    </main>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

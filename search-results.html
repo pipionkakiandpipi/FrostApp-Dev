@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de Recherche - FrostApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/FrostHub.png" type="image/png">
+    <style>
+        /* Styles pour les transitions */
+        body {
+            transition: opacity 0.5s ease; /* Transition douce pour l'opacité */
+            opacity: 1; /* Opacité par défaut */
+        }
+
+        .fade-in {
+            opacity: 1; /* Effet d'apparition */
+        }
+
+        .hidden {
+            display: none; /* Masque les résultats initialement */
+        }
+
+        /* Autres styles peuvent être ajoutés ici */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>FrostApp</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="#" id="all-games-button">Tous les jeux</a></li>
+                    <li><a href="#">Téléchargements</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Rechercher un jeu...">
+                <button id="search-button">🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="search-results">
+            <h2>Résultats de Recherche</h2>
+            <div id="results" class="game-grid hidden"></div> <!-- Conteneur des résultats de recherche -->
+        </section>
+    </main>
+
+    <script>
+        const gamesUrl = 'https://raw.githubusercontent.com/pipionkakiandpipi/NewFrostApp/refs/heads/main/games.json';
+
+        /**
+         * Charge tous les jeux depuis l'URL spécifiée
+         * @returns {Promise<Array>} Liste de tous les jeux
+         */
+        async function loadGames() {
+            try {
+                const response = await fetch(gamesUrl);
+                if (!response.ok) throw new Error('Erreur lors du chargement des jeux');
+                return await response.json();
+            } catch (error) {
+                console.error("Erreur lors du chargement des jeux:", error);
+                return []; // Retourne un tableau vide en cas d'erreur
+            }
+        }
+
+        /**
+         * Affiche les résultats de recherche basés sur le terme stocké dans localStorage
+         */
+        async function displaySearchResults() {
+            const searchTerm = localStorage.getItem('searchTerm'); // Récupère le terme de recherche
+            const allGames = await loadGames(); // Charge tous les jeux
+            const resultsContainer = document.getElementById('results');
+
+            if (searchTerm) {
+                // Filtrer les jeux en fonction du terme de recherche
+                const filteredGames = allGames.filter(game =>
+                    game.title.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+
+                if (filteredGames.length > 0) {
+                    // Affiche les 10 premiers résultats
+                    filteredGames.slice(0, 10).forEach(game => {
+                        const gameCard = `
+                            <div class="game-item">
+                                <a href="game-details.html?game=${game.id}">
+                                    <img src="${game.image}" alt="${game.title}">
+                                    <p>${game.title}</p> <!-- Ajout du titre du jeu -->
+                                </a>
+                            </div>
+                        `;
+                        resultsContainer.innerHTML += gameCard; // Ajoute la carte du jeu au conteneur
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p>Aucun jeu trouvé correspondant à votre recherche.</p>';
+                }
+            } else {
+                resultsContainer.innerHTML = '<p>Aucun terme de recherche trouvé.</p>';
+            }
+
+            // Affiche les résultats après le chargement
+            resultsContainer.classList.remove('hidden'); // Retire la classe hidden pour afficher les résultats
+            document.body.classList.add('fade-in'); // Ajoute la classe fade-in
+        }
+
+        // Charge et affiche les résultats à l'ouverture de la page
+        displaySearchResults();
+    </script>
+</body>
+</html>
